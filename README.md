@@ -153,7 +153,7 @@ pip >= 21.0
 
 ```bash
 # Clone the repository
-git clone https://github.com/tharun-ship-it/book-recommendation-system.git
+git clone https://github.com/OuyangXuelili/Book-Recommendation-System.git
 cd book-recommendation-system
 
 # Create virtual environment (recommended)
@@ -322,7 +322,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ```bash
 # Fork and clone
-git clone https://github.com/YOUR_USERNAME/book-recommendation-system.git
+git clone https://github.com/OuyangXuelili/Book-Recommendation-System.git
 
 # Create branch
 git checkout -b feature/amazing-feature
@@ -353,15 +353,15 @@ This project is licensed under the MIT License—see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**Tharun Ponnam**
+**Quang**
 
-* GitHub: [@tharun-ship-it](https://github.com/tharun-ship-it)
-* Email: tharunponnam007@gmail.com
+* GitHub: [@OuyangXuelili](https://github.com/OuyangXuelili)
+* Email: oneechansakurajimamai@gmail.com
 
 ---
 
 **⭐ If you find this project useful, please consider giving it a star!**
 
 * [🔗 Live Demo](https://knn-book-recommendation-system.streamlit.app)
-* [🐛 Report Bug](https://github.com/tharun-ship-it/book-recommendation-system/issues)
-* [✨ Request Feature](https://github.com/tharun-ship-it/book-recommendation-system/pulls)
+* [🐛 Report Bug](https://github.com/OuyangXuelili/Book-Recommendation-System/issues)
+* [✨ Request Feature](https://github.com/OuyangXuelili/Book-Recommendation-System/issues)

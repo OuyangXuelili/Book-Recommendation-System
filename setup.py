@@ -5,8 +5,8 @@ Book Recommendation System
 A production-ready book recommendation system using K-Nearest Neighbors
 and collaborative filtering on the UCSD Book Graph dataset.
 
-Author: Tharun Ponnam
-Email: tharunponnam007@gmail.com
+Author: Quang
+Email: oneechansakurajimamai@gmail.com
 """
 
 from setuptools import setup, find_packages
@@ -30,8 +30,8 @@ if requirements_path.exists():
 setup(
     name="book-recommendation-system",
     version="1.0.0",
-    author="Tharun Ponnam",
-    author_email="tharunponnam007@gmail.com",
+    author="Quang",
+    author_email="oneechansakurajimamai@gmail.com",
     description="A collaborative filtering book recommendation system using KNN",
     long_description=long_description,
     long_description_content_type="text/markdown",

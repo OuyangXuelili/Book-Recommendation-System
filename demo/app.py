@@ -6,8 +6,8 @@ Hệ thống gợi ý sách - Ứng dụng demo tương tác
 Ứng dụng web Streamlit cho gợi ý sách theo hướng lai,
 kết hợp lọc cộng tác và ghép nối theo nội dung.
 
-Author: Tharun Ponnam
-GitHub: @tharun-ship-it
+Author: Quang
+GitHub: @OuyangXuelili
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ import random
 
 # Page configuration
 st.set_page_config(
-    page_title="Hệ thống gợi ý sách | Tharun Ponnam",
+    page_title="Hệ thống gợi ý sách | Quang",
     page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded"
@@ -778,7 +778,7 @@ def main():
         render_sidebar_card(
             "Liên kết",
             (
-                '<p><a href="https://github.com/tharun-ship-it/book-recommendation-system" target="_blank">Kho GitHub</a></p>'
+                '<p><a href="https://github.com/OuyangXuelili/Book-Recommendation-System" target="_blank">Kho GitHub</a></p>'
                 '<p><a href="https://sites.google.com/eng.ucsd.edu/ucsdbookgraph/home" target="_blank">Bộ dữ liệu UCSD</a></p>'
             ),
         )
@@ -1752,7 +1752,7 @@ def legacy_main():
         st.markdown(f"""
         <div class="links-card">
             <h4 style="color: {COLORS['text_dark']}; margin: 0 0 0.5rem 0;">🔗 Liên kết</h4>
-            <p>📂 <a href="https://github.com/tharun-ship-it/book-recommendation-system" target="_blank">Kho GitHub</a></p>
+            <p>📂 <a href="https://github.com/OuyangXuelili/Book-Recommendation-System" target="_blank">Kho GitHub</a></p>
             <p>📊 <a href="https://sites.google.com/eng.ucsd.edu/ucsdbookgraph/home" target="_blank">Bộ dữ liệu UCSD</a></p>
         </div>
         """, unsafe_allow_html=True)
