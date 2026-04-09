@@ -1,283 +1,144 @@
 <p align="center">
-  <img src="https://img.icons8.com/fluency/96/books.png" alt="Book Recommendation System Logo" width="100"/>
+  <img src="https://img.icons8.com/fluency/96/books.png" alt="Book Recommendation System" width="96" />
 </p>
 
-<h1 align="center">📚 Book Recommendation System</h1>
+<h1 align="center">Book Recommendation System</h1>
 
 <p align="center">
-  <strong>Machine Learning-based Book Recommender using KNN & Collaborative Filtering</strong>
-</p>
-
-<p align="center">
-  <a href="#-overview">Overview</a> •
-  <a href="#-live-demo">Live Demo</a> •
-  <a href="#-features">Features</a> •
-  <a href="#-installation">Installation</a> •
-  <a href="#-results">Results</a> •
-  <a href="#-documentation">Documentation</a>
+  A Python project for loading Goodreads-style book data, preprocessing text features, building KNN-based recommenders, and evaluating recommendation quality.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.8+"/>
-  <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="scikit-learn"/>
-  <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas"/>
-  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit"/>
+  <a href="#overview">Overview</a> ·
+  <a href="#features">Features</a> ·
+  <a href="#installation">Installation</a> ·
+  <a href="#usage">Usage</a> ·
+  <a href="#streamlit-demo">Streamlit Demo</a> ·
+  <a href="#project-structure">Project Structure</a> ·
+  <a href="#testing">Testing</a>
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/License-MIT-00D9A5?style=for-the-badge" alt="MIT License"/>
-  <img src="https://img.shields.io/badge/Code_Style-Black-000000?style=for-the-badge" alt="Black"/>
-  <img src="https://img.shields.io/badge/Precision@10-89.2%25-E94560?style=for-the-badge" alt="Precision"/>
-</p>
+## Overview
 
----
+This repository contains a small recommendation pipeline built around K-Nearest Neighbors and supporting utilities for:
 
-## 🎯 Overview
+- loading and validating book/rating datasets
+- cleaning and preprocessing book metadata
+- extracting text and numeric features
+- generating recommendations with KNN and hybrid recommenders
+- evaluating results with ranking metrics
+- exploring the data with plots and a Streamlit demo
 
-A production-ready book recommendation system that suggests personalized books using **K-Nearest Neighbors (KNN)** algorithm with a **hybrid approach** combining collaborative filtering and content-based matching. This project implements multiple recommendation strategies with comprehensive evaluation metrics.
+The code is organized as a reusable Python package under `src/`, with a notebook for analysis and a separate demo app in `demo/`.
 
-Built using the [UCSD Book Graph](https://sites.google.com/eng.ucsd.edu/ucsdbookgraph/home) dataset derived from Goodreads, containing **2.36M books**, **876K users**, and **229M interactions**.
+## Features
 
-The system automatically:
-- Analyzes user reading patterns and preferences
-- Finds similar users using collaborative filtering
-- Matches books based on content features (genre, author, ratings)
-- Generates personalized recommendations with confidence scores
+- `DataLoader` and `GoodreadsLoader` for CSV, JSON, and gzipped JSON sources
+- `BookPreprocessor` for cleaning and normalizing book metadata
+- `FeatureExtractor` for TF-IDF, count, and combined text features
+- `KNNRecommender` and `HybridRecommender` for recommendations
+- `MetricsCalculator` and `RecommenderEvaluator` for Precision@K, Recall@K, NDCG, Hit Rate, MAP, coverage, and more
+- `visualization.py` helpers for rating, activity, and model comparison plots
+- `demo/app.py` Streamlit UI for interactive exploration
 
-**Key Achievement:** Achieved **89.2% Precision@10** and **96.3% Hit Rate** with the hybrid KNN approach, outperforming baseline models.
-
-### 🔄 Pipeline Architecture
-
-```
-                                BOOK RECOMMENDATION PIPELINE
-
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────────────┐
-│                 │      │                 │      │                         │
-│   USER INPUT    │─────▶│    FEATURE      │─────▶│       KNN MODEL         │
-│                 │      │   EXTRACTION    │      │   (Cosine Similarity)   │
-│                 │      │                 │      │                         │
-└─────────────────┘      └─────────────────┘      └────────────┬────────────┘
- • User Profile           • TF-IDF Vectors                     │
- • Reading Mood           • Rating Matrix                      │
- • Book Selection         • Genre Encoding                     ▼
-                                                  ┌─────────────────────────┐
-┌─────────────────┐      ┌─────────────────┐      │                         │
-│                 │      │                 │      │     HYBRID SCORING      │
-│     OUTPUT      │◀─────│    RANKING      │◀─────│     CF: 60%             │
-│                 │      │    ENGINE       │      │     Content: 40%        │
-│                 │      │                 │      │                         │
-└─────────────────┘      └─────────────────┘      └─────────────────────────┘
- • Top-K Books            • Score Sorting
- • Match Scores           • Filtering
- • Explanations
-```
-
----
-
-## 📱 App Preview
-
-### Personalized Recommendations
-Get personalized book recommendations with match scores based on user reading history and preferences.
-
-<p align="center">
-  <img src="assets/screenshots/app_recommendations.png" alt="Personalized Recommendations Demo" width="700"/>
-</p>
-
-### User Reading History
-View detailed reading history with star ratings - complete transparency into how recommendations are generated.
-
-<p align="center">
-  <img src="assets/screenshots/app_reading_history.png" alt="User Reading History" width="700"/>
-</p>
-
-### Reading Mood Selection
-Choose from 7 reading moods and discover books across 20 genres that match your current vibe.
-
-<p align="center">
-  <img src="assets/screenshots/app_mood_selection.png" alt="Mood-Based Recommendations" width="700"/>
-</p>
-
-### Find Similar Books
-Select any book you enjoyed and find similar titles using KNN similarity matching with genre and author analysis.
-
-<p align="center">
-  <img src="assets/screenshots/app_similar_books.png" alt="Similar Books Feature" width="700"/>
-</p>
-
----
-
-## 🚀 Live Demo
-
-Try the interactive Streamlit app - get personalized book recommendations in real-time!
-
-<p align="center">
-  <a href="https://knn-book-recommendation-system.streamlit.app">
-    <img src="https://img.shields.io/badge/▶_OPEN_LIVE_DEMO-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Open Live Demo" height="50"/>
-  </a>
-</p>
-
-### Run Locally
+## Installation
 
 ```bash
-# Clone and navigate
 git clone https://github.com/OuyangXuelili/Book-Recommendation-System.git
 cd book-recommendation-system
 
-# Install dependencies
-pip install -r requirements.txt
+python -m venv .venv
+.venv\Scripts\activate
 
-# Launch the demo
+pip install -e .
+```
+
+For development and demo dependencies:
+
+```bash
+pip install -e ".[dev,demo,notebook]"
+```
+
+## Usage
+
+### Load data
+
+```python
+from src.data_loader import GoodreadsLoader
+
+loader = GoodreadsLoader(data_dir="data")
+books_df, ratings_df = loader.load_dataset()
+print(loader.compute_statistics(books_df, ratings_df).summary())
+```
+
+### Build recommendations
+
+```python
+from src.recommender import KNNRecommender
+
+model = KNNRecommender(n_neighbors=20, metric="cosine", approach="item")
+model.fit(ratings_df, books_df)
+
+recommendations = model.recommend_for_user("user_123", n_recommendations=10)
+for rec in recommendations:
+    print(rec.title, rec.score)
+```
+
+### Preprocess text features
+
+```python
+from src.preprocessor import BookPreprocessor, FeatureExtractor
+
+preprocessor = BookPreprocessor()
+clean_books = preprocessor.fit_transform(books_df)
+
+extractor = FeatureExtractor(method="tfidf", max_features=5000)
+features = extractor.fit_transform(clean_books["title"])
+```
+
+## Streamlit Demo
+
+Run the interactive demo locally with:
+
+```bash
 streamlit run demo/app.py
 ```
 
----
+## Project Structure
 
-## ✨ Features
-
-| Feature | Description |
-|---------|-------------|
-| **Collaborative Filtering** | User-based and item-based CF using rating patterns |
-| **Content-Based Matching** | Genre, author, and metadata similarity |
-| **Hybrid Approach** | Combines CF (60%) + Content (40%) for best results |
-| **Mood-Based Recommendations** | 7 reading moods mapped to 20 genres |
-| **User Profile Analysis** | Reading history visualization with star ratings |
-| **Similar Book Finder** | KNN-powered book similarity search |
-| **Interactive Dashboard** | Real-time recommendations via Streamlit |
-
-### 💡 Key Capabilities
-
-- **100 Famous Books**: Curated dataset of bestselling titles across 20 genres
-- **100 User Profiles**: Realistic user personas with unique reading histories
-- **7 Reading Moods**: Adventurous, Romantic, Intellectual, Thrilling, Classic, Emotional, Escapist
-- **Match Scoring**: Confidence percentages for each recommendation
-- **Bestseller Badges**: Visual indicators for popular titles
-
----
-
-## 📊 Dataset
-
-**Source:** [UCSD Book Graph (Goodreads)](https://sites.google.com/eng.ucsd.edu/ucsdbookgraph/home)
-
-Large-scale book dataset collected from Goodreads for recommendation research, containing detailed book metadata and user interactions.
-
-| Feature | Description |
-|---------|-------------|
-| **Books** | 2.36 million titles |
-| **Users** | 876,145 unique users |
-| **Interactions** | 229 million ratings/reviews |
-| **Genres** | 20 categories |
-
-### 📈 Demo Dataset Statistics
-
-| Metric | Value |
-|--------|-------|
-| **Curated Books** | 100 famous bestsellers |
-| **User Profiles** | 100 realistic personas |
-| **Genres** | 20 categories |
-| **Reading Moods** | 7 mood categories |
-| **Avg Ratings/User** | 10-30 books |
-
-### 📚 Sample Books
-
-<p align="center">
-  <img src="assets/screenshots/sample_books.png" alt="Sample Books Dataset" width="700"/>
-</p>
-
-### 🎭 Reading Moods
-
-| Mood | Genres Covered |
-|------|----------------|
-| 🌟 Adventurous | Fantasy, Science Fiction, Thriller, Young Adult |
-| 💕 Romantic | Romance, Contemporary Fiction, Memoir |
-| 🧠 Intellectual | Non-Fiction, Psychology, Self-Help, Business, Philosophy, Biography |
-| 😱 Thrilling | Horror, Thriller, Mystery, True Crime, Dystopian Fiction |
-| 📜 Classic Vibes | Classic Fiction, Historical Fiction, Magical Realism |
-| 🎭 Emotional | Contemporary Fiction, Memoir, Romance, Young Adult |
-| 🔮 Escapist | Fantasy, Magical Realism, Science Fiction, Young Adult |
-
----
-
-## 📁 Project Structure
-
-```
+```text
 book-recommendation-system/
-├── src/
-│   ├── __init__.py
-│   ├── recommender.py         # Main recommendation engine
-│   ├── collaborative_filter.py # User/Item-based CF
-│   ├── content_based.py       # Content similarity matching
-│   ├── hybrid_model.py        # Hybrid recommendation approach
-│   ├── data_loader.py         # Dataset loading utilities
-│   └── evaluation.py          # Metrics & evaluation
-├── demo/
-│   └── app.py                 # Streamlit web application
-├── notebooks/
-│   └── book_recommendation_analysis.ipynb
-├── tests/
-│   └── test_recommender.py    # Comprehensive test suite
-├── config/
-│   └── config.yaml            # Pipeline configuration
-├── data/                      # Dataset directory
-├── models/                    # Saved model checkpoints
-├── assets/
-│   └── screenshots/           # README images
+├── config/            # YAML configuration
+├── data/              # Dataset notes and local data files
+├── demo/              # Streamlit demo app
+├── notebooks/         # Analysis notebook
+├── src/               # Library code
+├── tests/             # Pytest suite
+├── README.md
 ├── requirements.txt
 ├── setup.py
-├── LICENSE
-└── README.md
+└── pyproject.toml
 ```
 
----
+## Testing
 
-## 📊 Model Performance
+```bash
+pytest tests/ -v
+```
 
-| Model | Precision@10 | Recall@10 | NDCG@10 | Hit Rate | Coverage |
-|-------|--------------|-----------|---------|----------|----------|
-| **Hybrid (CF + Content)** | **89.2%** | **71.4%** | **0.912** | **96.3%** | **78.4%** |
-| Item-based CF | 86.7% | 68.9% | 0.891 | 94.8% | 72.1% |
-| User-based CF | 83.4% | 65.2% | 0.867 | 92.1% | 68.5% |
-| Content-based | 72.1% | 54.8% | 0.784 | 85.6% | 82.3% |
-| Popularity Baseline | 55.3% | 41.2% | 0.623 | 71.2% | 45.6% |
+## Configuration
 
-*Benchmarked on UCSD Book Graph dataset (test set: 20% holdout with stratified split)*
+Project settings live in [config/config.yaml](config/config.yaml). The package metadata and dependency groups are defined in [pyproject.toml](pyproject.toml) and [setup.py](setup.py).
 
----
+## Data
 
-## 📸 Results
+The repository is set up for Goodreads-style book and ratings data. See [data/README.md](data/README.md) for expected file names and download notes.
 
-### Model Comparison
+## Notes
 
-<p align="center">
-  <img src="assets/screenshots/model_comparison.png" alt="Model Performance Comparison" width="700"/>
-</p>
-
-All models achieve **>70% precision**, with **Hybrid (CF + Content)** leading at **89.2%**. The consistent high performance validates the effectiveness of combining collaborative filtering with content-based features.
-
-### Precision-Recall Tradeoff
-
-<p align="center">
-  <img src="assets/screenshots/precision_recall.png" alt="Precision-Recall Tradeoff" width="700"/>
-</p>
-
-As K increases, recall improves while precision slightly decreases. The sweet spot at **K=10** balances both metrics effectively for optimal user experience.
-
-### Genre Distribution
-
-<p align="center">
-  <img src="assets/screenshots/genre_distribution.png" alt="Genre Distribution" width="700"/>
-</p>
-
-The curated dataset covers **20 genres** with Classic Fiction, Young Adult, and Science Fiction being the most represented categories.
-
-### Rating Distribution
-
-<p align="center">
-  <img src="assets/screenshots/rating_distribution.png" alt="Rating Distribution" width="700"/>
-</p>
-
-User ratings follow a typical distribution with most ratings between **4-5 stars**, indicating users tend to rate books they enjoy.
-
----
+- The repo is intentionally kept lightweight: code, configuration, tests, and demo UI are separated.
+- The README focuses on what actually exists in this project instead of benchmark claims or generic marketing copy.
+- If you add new features or plots, update the relevant section here at the same time.
 
 ## 📦 Installation
 
